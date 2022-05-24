@@ -1,0 +1,47 @@
+%%{init: {'theme': 'base', 'themeVariables': 
+{ 'primaryColor': '#ffffff', 
+'titleColor': '#000000',
+'nodeTextColor': '#888888'
+'edgeLabelBackground':'#ffffee', 
+'tertiaryColor': '#fff0f0',
+'labelColor': '#ff3333',
+'sequence': { 'actorMargin': 300 }
+}}}%%
+
+flowchart TB
+
+    subgraph TOP["Secure Web App secrets in Key Vault"]
+    direction TB
+
+        L1["Client"]
+
+        subgraph L2["Azure Cloud"]
+        direction LR
+
+            subgraph L3["Azure App Service (Web  app)"]
+            direction TB
+
+                L4["App Setting<br/> (Reference to Key Vault secret)"]
+                L10["Source code"]
+            end
+
+            subgraph L6["Azure Cosmos DB API for MongoDB"]
+            direction TB
+
+                L7["Database"]
+
+            end 
+            subgraph L8["Azure Key Vault"]
+            direction TB
+
+                L9["Secret"]
+
+            end 
+
+            L4 -- Use Managed identity authentication</br>to read secret--> L9
+
+        end
+
+        L1 --> L2
+        L10 -- Use DefaultAzureCredential authentication<br/>to use Cosmos DB--> L6
+    end
