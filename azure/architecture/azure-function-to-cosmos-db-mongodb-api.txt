@@ -1,0 +1,49 @@
+%%{init: {'theme': 'base', 'themeVariables': 
+{ 'primaryColor': '#ffffff', 
+'titleColor': '#000000',
+'nodeTextColor': '#888888'
+'edgeLabelBackground':'#ffffee', 
+'tertiaryColor': '#fff0f0',
+'labelColor': '#ff3333',
+'sequence': { 'actorMargin': 300 }
+}}}%%
+
+flowchart TB
+
+    subgraph TOP["Client to Serverless"]
+    direction TB
+
+        subgraph L1["Client"]
+            direction TB
+            Ca["cURL"]
+            Cb["PostMan"]
+            Cc["FrontEnd like React or Vue"]
+        end
+
+
+        subgraph L2["Azure Cloud"]
+        direction LR
+
+            subgraph L3["Azure Function"]
+            direction TB
+
+                L4["HTTP Endpoint"]
+                L5["Mongoose SDK"]
+            end
+            L4 --> L5 
+
+            subgraph L6["Azure Cosmos DB API for MongoDB"]
+            direction TB
+
+                L7["Database"]
+
+            end 
+
+            L5-->L6
+
+        end
+
+        L1 --> L2
+    end
+
+
